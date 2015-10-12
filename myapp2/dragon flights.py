@@ -15,7 +15,7 @@ class Dragon:
         self.x, self.y =192 , 60
         self.frame = 0
         self.state = self.STAND
-        self.image = load_image('change1345.png')
+        self.image = load_image('change1234.png')
 
     def handle_event(self, event):
         if (event.type, event.key) == (SDL_KEYDOWN, SDLK_LEFT):
@@ -58,7 +58,7 @@ class Dragon:
         pass
 
     def draw(self):
-        self.image.clip_draw(self.frame*157, 0, 157, 128, self.x, self.y)
+        self.image.clip_draw(self.frame*154, 0, 157, 128, self.x, self.y)
 
 
 
@@ -100,7 +100,7 @@ def main():
 
         update_canvas()
 
-        delay(0.08)
+        delay(0.1)
 
     close_canvas()
 
