@@ -1,5 +1,13 @@
 import random
+import json
+import os
+
+import game_framework
+import title_state
+
 from pico2d import *
+
+name = "MainState"
 
 class Forest:
     def __init__(self):
@@ -7,6 +15,9 @@ class Forest:
 
     def draw(self):
         self.image.draw(192, 256)
+
+
+
 
 class Dragon:
     LEFT_RUN, RIGHT_RUN, STAND, UP_RUN, DOWN_RUN = 0, 1, 2, 3, 4
@@ -100,7 +111,7 @@ def main():
 
         update_canvas()
 
-        delay(0.1)
+        delay(0.07)
 
     close_canvas()
 
