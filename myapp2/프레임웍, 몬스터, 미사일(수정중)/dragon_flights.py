@@ -14,16 +14,32 @@ dragon = None
 background = None
 monster = None
 font = None
-missile_dr = None
 
-Missile = list()
+Missile_1 = list()
+
+back_y1 = 0
+back_y2 = 512
 
 class Background:
     def __init__(self):
         self.image = load_image('01.png')
+        self.image2 = load_image('01.png')
+
+    def update(self):
+        global back_y1, back_y2
+        back_y1 -= 5
+        back_y2 -= 5
+        if(back_y2 == 0):
+            back_y1 = 0
+            back_y2 = 512
 
     def draw(self):
-        self.image.draw(192, 256)
+        global back_y1, back_y2
+        self.image.draw_to_origin(0, back_y2, 384, 512)
+
+    def draw2(self):
+        global back_y1, back_y2
+        self.image.draw_to_origin(0, back_y1  , 384, 512)
 
 
 class Monster:
@@ -74,7 +90,7 @@ class Monster:
 
     def update(self):
         self.frame = (self.frame + 1) % 3
-        self.y -= 5
+        self.y -= 2
 
     def draw(self):
         self.image.clip_draw(self.frame*154, 0, 157, 128, self.x, self.y)
@@ -83,8 +99,6 @@ class Monster:
 class Dragon:
     LEFT_RUN, RIGHT_RUN, STAND, UP_RUN, DOWN_RUN = 0, 1, 2, 3, 4
 
-    global missile_dr
-
     def __init__(self):
         self.x, self.y =192 , 60
         self.frame = 0
@@ -92,9 +106,9 @@ class Dragon:
         self.image = load_image('change1234.png')
 
     def handle_event(self, event):
-        if self.state in (self.RIGHT_RUN, self.LEFT_RUN, self.DOWN_RUN, self.UP_RUN, self.STAND):
-            if (event.type, event.key) == (SDL_KEYDOWN, SDLK_SPACE):
-                Missile.apend(missile(missile_dr.direction))
+        if (event.type, event.key) == (SDL_KEYDOWN, SDLK_SPACE):
+            if self.state in (self.RIGHT_RUN, self.LEFT_RUN, self.DOWN_RUN, self.UP_RUN, self.STAND):
+                dragon.shooting()
 
         if (event.type, event.key) == (SDL_KEYDOWN, SDLK_LEFT):
             if self.state in (self.STAND, self.RIGHT_RUN, self.UP_RUN, self.DOWN_RUN):
@@ -138,40 +152,42 @@ class Dragon:
     def draw(self):
         self.image.clip_draw(self.frame*154, 0, 157, 128, self.x, self.y)
 
-class missile:
+    def shooting(self):
+        newmissile = Missile(self.x, self.y)
+        Missile_1.append(newmissile)
+
+class Missile:
     global dragon
-    def __init__(self):
-        self.x2, self.y2 = self.x, self.y = dragon.x, dragon.y
-        self.missile_frame = 0
+    def __init__(self, x, y):
+        self.x, self.y = x, y
         self.image = load_image('bullet_01.png')
-        self.direction = dir
-        if dir == 1 :
-            self.image = load_image('bullet_01.png')
-        elif dir == 0 :
-            self.direction = -1
 
     def update(self):
-        self.missile_frame = 0
-        self.y += (5 * self.direction)
+        self.y += 5
+        if(self.y > 512):
+            self.y = 0
+            del Missile_1
 
     def draw(self):
-        if dragon.state in (dragon.RIGHT_RUN, dragon.LEFT_RUN, dragon.DOWN_RUN, dragon.UP_STAND, dragon.STAND):
+        if dragon.state in (dragon.RIGHT_RUN, dragon.LEFT_RUN, dragon.DOWN_RUN, dragon.UP_RUN, dragon.STAND):
             self.image.draw(self.x, self.y)
 
+    def get_bb(self):
+        return self.x-50, self.y-50, self.x+50, self.y+50
 
 def enter():
     global dragon, monster, background, team, missile_dr
     dragon = Dragon()
     team = [Monster() for i in range(4)]
     background = Background()
+    Missile_1 = list()
 
 
-def exit():
-    global dragon, monster, background, missile_dr
+def exit( ):
+    global dragon, monster, background
     del(dragon)
     del(monster)
     del(background)
-    del(missile_dr)
 
 def pause():
     pass
@@ -194,26 +210,23 @@ def handle_events():
 
 def update():
     dragon.update()
+    background.update()
+    global missile
     for monster in team:
         monster.update()
 
-    for i in Missile:
-        if i.y < 512:
-            i.update()
-        if i.y > 512 :
-            Missile.remove(i)
-        if i.y < 40:
-            Missile.remove(i)
+    for i in Missile_1:
+        i.update()
 
 def draw():
     clear_canvas()
     background.draw()
+    background.draw2()
     dragon.draw()
     for monster in team:
         monster.draw()
-    for i in Missile:
-        if 40 < i.y < 512:
-            i.draw
+    for i in Missile_1:
+        i.draw()
     update_canvas()
     delay(0.07)
 

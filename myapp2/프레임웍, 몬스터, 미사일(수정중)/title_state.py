@@ -31,7 +31,7 @@ def handle_events():
 
 def draw():
     clear_canvas()
-    image.draw(192, 256)
+    image.draw_to_origin(0, 0, 384, 512)
     update_canvas()
 
 
