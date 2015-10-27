@@ -27,8 +27,8 @@ class Background:
 
     def update(self):
         global back_y1, back_y2
-        back_y1 -= 5
-        back_y2 -= 5
+        back_y1 -= 4
+        back_y2 -= 4
         if(back_y2 == 0):
             back_y1 = 0
             back_y2 = 512
@@ -164,9 +164,9 @@ class Missile:
 
     def update(self):
         self.y += 5
-        if(self.y > 512):
-            self.y = 0
-            del Missile_1
+        # if(self.y > 512):
+        #     self.y = 0
+        #     del Missile_1
 
     def draw(self):
         if dragon.state in (dragon.RIGHT_RUN, dragon.LEFT_RUN, dragon.DOWN_RUN, dragon.UP_RUN, dragon.STAND):
