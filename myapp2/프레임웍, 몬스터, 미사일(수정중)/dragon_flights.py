@@ -27,8 +27,8 @@ class Background:
 
     def update(self):
         global back_y1, back_y2
-        back_y1 -= 4
-        back_y2 -= 4
+        back_y1 -= 2
+        back_y2 -= 2
         if(back_y2 == 0):
             back_y1 = 0
             back_y2 = 512
@@ -86,11 +86,11 @@ class Monster:
         # self.state_frames = 0
         # self.state = self.FLYING
         if Monster.image == None:
-            Monster.image = load_image('monster.png')
+            Monster.image = load_image('monster1.png')
 
     def update(self):
         self.frame = (self.frame + 1) % 3
-        self.y -= 2
+        self.y -= 1
 
     def draw(self):
         self.image.clip_draw(self.frame*154, 0, 157, 128, self.x, self.y)
