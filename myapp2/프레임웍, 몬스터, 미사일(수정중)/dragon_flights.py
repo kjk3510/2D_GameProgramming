@@ -12,7 +12,7 @@ name = "MainState"
 
 dragon = None
 background = None
-monster = None
+whitemonster = None
 font = None
 
 Missile_1 = list()
@@ -39,10 +39,10 @@ class Background:
 
     def draw2(self):
         global back_y1, back_y2
-        self.image.draw_to_origin(0, back_y1  , 384, 512)
+        self.image.draw_to_origin(0, back_y1, 384, 512)
 
 
-class Monster:
+class Whitemonster:
     image = None
     FLYING = 0
 
@@ -85,8 +85,8 @@ class Monster:
         # self.run_frames = 0
         # self.state_frames = 0
         # self.state = self.FLYING
-        if Monster.image == None:
-            Monster.image = load_image('monster1.png')
+        if Whitemonster.image == None:
+            Whitemonster.image = load_image('monster1.png')
 
     def update(self):
         self.frame = (self.frame + 1) % 3
@@ -176,9 +176,9 @@ class Missile:
         return self.x-50, self.y-50, self.x+50, self.y+50
 
 def enter():
-    global dragon, monster, background, team, missile_dr
+    global dragon, whitemonster, background, team, missile_dr
     dragon = Dragon()
-    team = [Monster() for i in range(4)]
+    team = [Whitemonster() for i in range(4)]
     background = Background()
     Missile_1 = list()
 
@@ -186,7 +186,7 @@ def enter():
 def exit( ):
     global dragon, monster, background
     del(dragon)
-    del(monster)
+    del(whitemonster)
     del(background)
 
 def pause():
@@ -212,8 +212,8 @@ def update():
     dragon.update()
     background.update()
     global missile
-    for monster in team:
-        monster.update()
+    for whitemonster in team:
+        whitemonster.update()
 
     for i in Missile_1:
         i.update()
@@ -223,8 +223,8 @@ def draw():
     background.draw()
     background.draw2()
     dragon.draw()
-    for monster in team:
-        monster.draw()
+    for whitemonster in team:
+        whitemonster.draw()
     for i in Missile_1:
         i.draw()
     update_canvas()
