@@ -86,14 +86,14 @@ class Whitemonster:
         # self.state_frames = 0
         # self.state = self.FLYING
         if Whitemonster.image == None:
-            Whitemonster.image = load_image('monster1.png')
+            Whitemonster.image = load_image('whdragon.png')
 
     def update(self):
-        self.frame = (self.frame + 1) % 3
+        self.frame = (self.frame + 1) % 4
         self.y -= 1
 
     def draw(self):
-        self.image.clip_draw(self.frame*154, 0, 157, 128, self.x, self.y)
+        self.image.clip_draw(self.frame*76, 0, 76, 51, self.x, self.y)
 
 
 class Dragon:
@@ -103,7 +103,7 @@ class Dragon:
         self.x, self.y =192 , 60
         self.frame = 0
         self.state = self.STAND
-        self.image = load_image('change1234.png')
+        self.image = load_image('sunny.png')
 
     def handle_event(self, event):
         if (event.type, event.key) == (SDL_KEYDOWN, SDLK_SPACE):
@@ -138,19 +138,19 @@ class Dragon:
 
 
     def update(self):
-        self.frame = (self.frame + 1) % 3
+        self.frame = (self.frame + 1) % 4
         if self.state == self.RIGHT_RUN:
-            self.x = min(324, self.x + 10)
+            self.x = min(374, self.x + 10)
         elif self.state == self.LEFT_RUN:
-            self.x = max(60, self.x - 10)
+            self.x = max(10, self.x - 10)
         elif self.state == self.UP_RUN:
-            self.y = min(512, self.y + 10)
+            self.y = min(452, self.y + 10)
         elif self.state == self.DOWN_RUN:
-            self.y = max(0, self.y - 10)
+            self.y = max(60, self.y - 10)
         pass
 
     def draw(self):
-        self.image.clip_draw(self.frame*154, 0, 157, 128, self.x, self.y)
+        self.image.clip_draw(self.frame*128, 0, 128, 106, self.x, self.y)
 
     def shooting(self):
         newmissile = Missile(self.x, self.y)
@@ -178,7 +178,7 @@ class Missile:
 def enter():
     global dragon, whitemonster, background, team, missile_dr
     dragon = Dragon()
-    team = [Whitemonster() for i in range(4)]
+    team = [Whitemonster() for i in range(5)]
     background = Background()
     Missile_1 = list()
 
