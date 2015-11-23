@@ -3,12 +3,17 @@ __author__ = 'Administrator'
 import random
 
 from pico2d import *
-from missile import *
+from missile_sunny import *
+from missile_raby import *
 from game_framework import *
 
-class Whitemonster:
+class Whdragon:
     image = None
     FLYING = 0
+
+    TIME_PER_ACTION = 0.05
+    ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
+    FRAMES_PER_ACTION = 4
 
     # def handle_left_run(self):
     #     self.x -= 5
@@ -47,21 +52,25 @@ class Whitemonster:
         self.xSize = 76/2
         self.ySize = 72/2
 
-        self.x, self.y = 35 + 70 * num, random.randint(400, 500)
+        self.x, self.y = 35 + 70 * num, 510
         self.frame = 0
+        self.total_frames = 0
         self.Missile = []
         self.attackDelay = random.randint(3, 5)
         # self.run_frames = 0
         # self.state_frames = 0
         # self.state = self.FLYING
-        if Whitemonster.image == None:
-            Whitemonster.image = load_image('whdragon.png')
+        if Whdragon.image == None:
+            Whdragon.image = load_image('whdragon.png')
+
     def __del__(self):
         for i in self.Missile:
             #del(i)
             self.Missile.remove(i)
 
     def update(self, frame_time):
+        self.total_frames += Whdragon.FRAMES_PER_ACTION * Whdragon.ACTION_PER_TIME * frame_time
+        self.frame = int(self.total_frames) % 4
         self.frame = (self.frame + 1) % 4
         self.y -= 1
 

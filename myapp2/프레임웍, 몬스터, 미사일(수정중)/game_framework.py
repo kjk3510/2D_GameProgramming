@@ -1,3 +1,5 @@
+import time
+
 def collide(a, b):
     left_a, bottom_a, right_a, top_a = a.get_bb()
     left_b, bottom_b, right_b, top_b = b.get_bb()
@@ -38,14 +40,14 @@ class TestGameState:
     def resume(self):
         print("State [%s] Resumed" % self.name)
 
-    def handle_events(self):
-        print("State [%s] handle_events" % self.name)
+    def handle_events(self, frame_time):
+        print("State [%s] handle_events" % (self.name, frame_time))
 
-    def update(self):
-        print("State [%s] update" % self.name)
+    def update(self, frame_time):
+        print("State [%s] update" % (self.name, frame_time))
 
-    def draw(self):
-        print("State [%s] draw" % self.name)
+    def draw(self, frame_time):
+        print("State [%s] draw" % (self.name, frame_time))
 
 
 

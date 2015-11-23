@@ -4,9 +4,9 @@ import random
 
 from game_framework import *
 from pico2d import *
-from missile_sunny import *
+from missile_raby import *
 
-class Sunny:
+class Raby:
     TIME_PER_ACTION = 0.5
     ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
     FRAMES_PER_ACTION = 4
@@ -18,7 +18,7 @@ class Sunny:
         self.frame = 0
         self.total_frames = 0
         self.state = self.STAND
-        self.image = load_image('sunny.png')
+        self.image = load_image('raby.png')
 
         self.xSize = 128/2
         self.ySize = 106/2
@@ -56,7 +56,7 @@ class Sunny:
                 self.state = self.STAND
 
     def update(self, frame_time):
-        self.total_frames += Sunny.FRAMES_PER_ACTION * Sunny.ACTION_PER_TIME * frame_time
+        self.total_frames += Raby.FRAMES_PER_ACTION * Raby.ACTION_PER_TIME * frame_time
         self.frame = int(self.total_frames) % 4
 
         for i in self.Missile_1:

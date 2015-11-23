@@ -12,11 +12,11 @@ class Missile:
         self.ySize = 20
 
         if isMonster == False:
-            self.image = load_image('bullet_01.png')
+            self.image = load_image('bullet_sunny.png')
         else:
-            self.image = load_image('bullet_02.png')
+            self.image = load_image('bullet_mon.png')
 
-        self.lifeTIme = 3.0
+        self.lifeTIme = 7.0
         self.isMonster = isMonster
 
     def update(self, frame_time):
