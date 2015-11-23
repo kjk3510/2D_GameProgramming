@@ -11,7 +11,7 @@ class Whdragon:
     image = None
     FLYING = 0
 
-    TIME_PER_ACTION = 0.05
+    TIME_PER_ACTION = 0.5
     ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
     FRAMES_PER_ACTION = 4
 
@@ -51,6 +51,7 @@ class Whdragon:
     def __init__(self, num):
         self.xSize = 76/2
         self.ySize = 72/2
+        num = random.randint(1, 4)
 
         self.x, self.y = 35 + 70 * num, 510
         self.frame = 0
@@ -77,7 +78,7 @@ class Whdragon:
         self.attackDelay -= frame_time
         if self.attackDelay < 0.0 :
             self.Missile.append(Missile(self, True))
-            self.attackDelay = 5.0
+            self.attackDelay = 4.0
 
         for i in self.Missile:
             i.update(frame_time)

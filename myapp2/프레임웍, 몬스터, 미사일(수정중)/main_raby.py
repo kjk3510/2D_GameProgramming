@@ -1,4 +1,3 @@
-
 import random
 import json
 import os
@@ -6,11 +5,12 @@ import sys
 
 import game_framework
 import title_state
+import select_state
 
 from pico2d import *
 from background import *
-from whdragon import *
 from raby import *
+from whdragon import *
 
 
 first_time = 0
@@ -23,15 +23,13 @@ background = None
 whdragon = None
 font = None
 
-selch = 0
-
 #Missile_1 = list()
 
 def enter():
     global raby, whdragon, background, team, missile_dr, first_time#, current_time
     raby = Raby()
     team = []
-    for i in range(5):
+    for i in range(3):
         team.append(Whdragon(i))
     background = Background()
 
@@ -54,7 +52,6 @@ def resume():
 def handle_events():
     global running
     global raby
-    global paladin
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
@@ -68,9 +65,9 @@ def handle_events():
 def monsterRegen(frame_time):
     global timesum
     timesum += frame_time
-    if timesum >= 10.0:
+    if timesum >= 5.0:
         timesum = 0.0
-        for i in range(5):
+        for i in range(3):
             team.append(Whdragon(i))
 
 def update():
@@ -86,7 +83,6 @@ def update():
 
     raby.update(frame_time)
 
-
     background.update(frame_time)
 
     missile = raby.get_missile()
@@ -100,8 +96,10 @@ def update():
             team.remove(whdragon)
 
         mon_missile = whdragon.get_missile()
+
         if raby.collision(mon_missile) == True:
-             print("충돌") #플레이어가 몬스터에게 총알 맞을떄 하면됨
+            print("충돌") #플레이어가 몬스터에게 총알 맞을떄 하면됨
+            game_framework.change_state(select_state)
 
 
     first_time = get_time()
