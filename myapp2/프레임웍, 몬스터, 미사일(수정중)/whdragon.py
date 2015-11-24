@@ -72,8 +72,8 @@ class Whdragon:
     def update(self, frame_time):
         self.total_frames += Whdragon.FRAMES_PER_ACTION * Whdragon.ACTION_PER_TIME * frame_time
         self.frame = int(self.total_frames) % 4
-        self.frame = (self.frame + 1) % 4
-        self.y -= 1
+        #self.frame = (self.frame + 1) % 4
+        self.y -= 40 * frame_time
 
         self.attackDelay -= frame_time
         if self.attackDelay < 0.0 :

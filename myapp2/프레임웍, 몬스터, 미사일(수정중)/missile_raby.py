@@ -16,14 +16,14 @@ class Missile:
         else:
             self.image = load_image('bullet_mon.png')
 
-        self.lifeTIme = 7.0
+        self.lifeTIme = 10.0
         self.isMonster = isMonster
 
     def update(self, frame_time):
         if self.isMonster == True:
-            self.y -= 5
+            self.y -= 60 * frame_time
         else:
-            self.y += 5
+            self.y += 60 * frame_time
         self.lifeTIme -= frame_time
 
     def IsLive(self):

@@ -15,9 +15,9 @@ class Background:
     RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
     RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 
-    #TIME_PER_ACTION = 0.1
-    #ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
-    #FRAMES_PER_ACTION = 4
+    TIME_PER_ACTION = 0.2
+    ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
+    FRAMES_PER_ACTION = 4
 
     def __init__(self):
         self.image = load_image('01.png')
@@ -26,9 +26,11 @@ class Background:
 
     def update(self, frame_time):
         global back_y1, back_y2
-        #move_to_map = self.FRAMES_PER_ACTION * frame_time * self.ACTION_PER_TIME
-        back_y1 -= 8
-        back_y2 -= 8
+        move_to_map = self.FRAMES_PER_ACTION * frame_time * self.ACTION_PER_TIME
+        #back_y1 -= 33.6 * frame_time
+        #back_y2 -= 33.6 * frame_time
+        back_y1 -= move_to_map
+        back_y2 -= move_to_map
         if(back_y2 == 0):
             back_y1 = 0
             back_y2 = 512

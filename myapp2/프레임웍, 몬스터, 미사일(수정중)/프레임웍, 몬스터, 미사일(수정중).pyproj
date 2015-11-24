@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{418fbdf9-52e4-4a3d-88a4-805ffba18924}</ProjectGuid>
+    <ProjectHome />
+    <StartupFile>mygame.py</StartupFile>
+    <SearchPath />
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <InterpreterId />
+    <InterpreterVersion />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+    <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="01.png" />
+    <Content Include="123.png" />
+    <Content Include="boss.png" />
+    <Content Include="bullet_mon.png" />
+    <Content Include="bullet_raby.png" />
+    <Content Include="bullet_sunny.png" />
+    <Content Include="dragon title_1.png" />
+    <Content Include="kpu_credit_1.png" />
+    <Content Include="raby.png" />
+    <Content Include="selected.png" />
+    <Content Include="sunny.png" />
+    <Content Include="whdragon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="background.py" />
+    <Compile Include="boss1.py" />
+    <Compile Include="game_framework.py" />
+    <Compile Include="main_raby.py" />
+    <Compile Include="main_sunny.py" />
+    <Compile Include="missile_raby.py" />
+    <Compile Include="missile_sunny.py" />
+    <Compile Include="mygame.py" />
+    <Compile Include="raby.py" />
+    <Compile Include="select_state.py" />
+    <Compile Include="start_state.py" />
+    <Compile Include="sunny.py" />
+    <Compile Include="title_state.py" />
+    <Compile Include="whdragon.py" />
+  </ItemGroup>
+  <Import Project="$(PtvsTargetsFile)" Condition="Exists($(PtvsTargetsFile))" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="!Exists($(PtvsTargetsFile))" />
+</Project>

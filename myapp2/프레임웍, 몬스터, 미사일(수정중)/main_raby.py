@@ -1,4 +1,4 @@
-import random
+﻿import random
 import json
 import os
 import sys
@@ -29,7 +29,7 @@ def enter():
     global raby, whdragon, background, team, missile_dr, first_time#, current_time
     raby = Raby()
     team = []
-    for i in range(3):
+    for i in range(4):
         team.append(Whdragon(i))
     background = Background()
 
@@ -38,9 +38,9 @@ def enter():
     #Missile_1 = list()
 
 def exit( ):
-    global raby, whdragon, background
+    global raby, team, background
     del(raby)
-    del(whdragon)
+    del(team)
     del(background)
 
 def pause():
@@ -67,7 +67,7 @@ def monsterRegen(frame_time):
     timesum += frame_time
     if timesum >= 5.0:
         timesum = 0.0
-        for i in range(3):
+        for i in range(4):
             team.append(Whdragon(i))
 
 def update():
@@ -100,8 +100,9 @@ def update():
         if raby.collision(mon_missile) == True:
             print("충돌") #플레이어가 몬스터에게 총알 맞을떄 하면됨
             game_framework.change_state(select_state)
+            break
 
-
+            
     first_time = get_time()
     #for i in Missile_1:
     #    i.update()
@@ -121,7 +122,7 @@ def draw():
     #for i in Missile_1:
     #    i.draw()
     update_canvas()
-    delay(0.07)
+    #delay(0.07)
 
 
 # def main():
