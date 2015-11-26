@@ -15,9 +15,9 @@ class Background:
     RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
     RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 
-    TIME_PER_ACTION = 0.2
+    TIME_PER_ACTION = 0.1
     ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
-    FRAMES_PER_ACTION = 4
+    FRAMES_PER_ACTION = 5.12
 
     def __init__(self):
         self.image = load_image('01.png')
