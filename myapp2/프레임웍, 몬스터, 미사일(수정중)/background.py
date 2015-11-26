@@ -4,8 +4,7 @@ import random
 
 from pico2d import *
 
-back_y1 = 0
-back_y2 = 512
+
 
 class Background:
 
@@ -15,30 +14,29 @@ class Background:
     RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
     RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 
-    TIME_PER_ACTION = 0.1
+    TIME_PER_ACTION = 0.5
     ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
-    FRAMES_PER_ACTION = 5.12
+    FRAMES_PER_ACTION = 100
 
     def __init__(self):
         self.image = load_image('01.png')
         self.image2 = load_image('01.png')
         self.total_frames = 0
+        self.back_y1 = 0
+        self.back_y2 = 512
 
     def update(self, frame_time):
-        global back_y1, back_y2
-        move_to_map = self.FRAMES_PER_ACTION * frame_time * self.ACTION_PER_TIME
-        #back_y1 -= 33.6 * frame_time
-        #back_y2 -= 33.6 * frame_time
-        back_y1 -= move_to_map
-        back_y2 -= move_to_map
-        if(back_y2 == 0):
-            back_y1 = 0
-            back_y2 = 512
+        #move_to_map = self.FRAMES_PER_ACTION * frame_time * self.ACTION_PER_TIME
+        self.back_y1 -= self.FRAMES_PER_ACTION * frame_time
+        self.back_y2 -= self.FRAMES_PER_ACTION * frame_time
+        #back_y1 -= move_to_map
+        #back_y2 -= move_to_map
+        if(self.back_y1 <= -511):
+            self.back_y1 = 0
+            self.back_y2 = 512
 
     def draw(self):
-        global back_y1, back_y2
-        self.image.draw_to_origin(0, back_y2, 384, 512)
+        self.image.draw_to_origin(0, self.back_y2, 384, 512)
 
     def draw2(self):
-        global back_y1, back_y2
-        self.image.draw_to_origin(0, back_y1, 384, 512)
+        self.image.draw_to_origin(0, self.back_y1, 384, 512)
