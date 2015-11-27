@@ -4,24 +4,30 @@ import random
 
 from game_framework import *
 from pico2d import *
-from missile_raby import *
+from Missile import *
 
-class Raby:
+class Player:
+    Name = None
     TIME_PER_ACTION = 0.5
     ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
     FRAMES_PER_ACTION = 4
 
     LEFT_RUN, RIGHT_RUN, STAND, UP_RUN, DOWN_RUN = 0, 1, 2, 3, 4
 
-    def __init__(self):
+    def __init__(self, name):
         self.x, self.y = 192, 60
         self.frame = 0
         self.total_frames = 0
         self.state = self.STAND
-        self.image = load_image('raby.png')
-
-        self.xSize = 128/2
-        self.ySize = 106/2
+        Player.Name = name
+        if Player.Name == "Sunny":
+            print("Sunny")
+            self.image = load_image('sunny.png')
+        elif Player.Name == "Raby":
+            print("Raby")
+            self.image = load_image('raby.png')
+        self.xSize = 116/2
+        self.ySize = 100/2
 
         self.Missile_1 = list()
 
@@ -56,7 +62,7 @@ class Raby:
                 self.state = self.STAND
 
     def update(self, frame_time):
-        self.total_frames += Raby.FRAMES_PER_ACTION * Raby.ACTION_PER_TIME * frame_time
+        self.total_frames += Player.FRAMES_PER_ACTION * Player.ACTION_PER_TIME * frame_time
         self.frame = int(self.total_frames) % 4
 
         for i in self.Missile_1:
@@ -76,7 +82,7 @@ class Raby:
 
     def draw(self):
         self.image.clip_draw(self.frame*128, 0, 128, 106, self.x, self.y)
-
+        draw_rectangle(*self.get_bb())
         for i in self.Missile_1:
             i.draw()
 

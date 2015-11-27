@@ -4,15 +4,18 @@ from pico2d import *
 
 #cos(90 * (3.141592/180.0))
 class Missile:
-    def __init__(self, Sunny, isMonster):
-        self.sunny = Sunny
-        self.x, self.y = Sunny.x, Sunny.y
+    def __init__(self, player, isMonster):
+        self.raby = player
+        self.x, self.y = player.x, player.y
 
         self.xSize = 10
         self.ySize = 20
 
         if isMonster == False:
-            self.image = load_image('bullet_sunny.png')
+            if player.Name == "Raby":
+                self.image = load_image('bullet_raby.png')
+            elif player.Name == "Sunny":
+                self.image = load_image('bullet_sunny.png')
         else:
             self.image = load_image('bullet_mon.png')
 
@@ -32,7 +35,6 @@ class Missile:
     def draw(self):
         #if self.sunny.state in (self.sunny.RIGHT_RUN, self.sunny.LEFT_RUN, self.sunny.DOWN_RUN, self.sunny.UP_RUN, self.sunny.STAND):
         self.image.draw(self.x, self.y)
-
 
     def get_bb(self):
         return self.x - self.xSize, self.y - self.ySize, self.x + self.xSize, self.y + self.ySize

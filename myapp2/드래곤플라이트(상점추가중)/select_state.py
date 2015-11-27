@@ -2,17 +2,21 @@ __author__ = 'Administrator'
 
 
 import game_framework
-import main_raby
-import main_sunny
+import Player
+import mainGame
+from Ui import *
 from pico2d import *
 
-
+ui = None
 name = "SelectState"
 image = None
-
+character = None
+#def getUI():
+#    global ui
+ #   return ui
 
 def enter():
-    global image
+    global image, ui
     image = load_image('selected.png')
 
 
@@ -23,7 +27,7 @@ def exit():
 
 def handle_events():
     events = get_events()
-    global x, y
+    global x, y, PlayerName, ui
     for event in events:
         if event.type == SDL_QUIT:
             game_framework.quit()
@@ -34,9 +38,15 @@ def handle_events():
         elif event.type == SDL_MOUSEBUTTONDOWN:
             x, y = event.x, 512 - event.y
             if x > 47 and x < 168 and y > 190 and y < 312:
-                game_framework.change_state(main_sunny)
+                ui = UI("Sunny")
+                print("2", ui.name)
+                #game_framework.push_state(mainGame)
+                game_framework.change_state(mainGame)
             if x > 215 and x < 335 and y > 190 and y < 312:
-                game_framework.change_state(main_raby)
+                ui = UI("Raby")
+                #game_framework.push_state(mainGame)
+                game_framework.change_state(mainGame)
+                #game_framework.change_state(main_raby)
 
         else:
             if (event.type, event.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
