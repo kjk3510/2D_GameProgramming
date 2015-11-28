@@ -86,7 +86,7 @@ def monsterRegen(frame_time):
     global timesum
     timesum += frame_time
 
-    if timesum >= 5.0:
+    if timesum >= 7.0:
         timesum = 0.0
         for i in range(6):
             if random.randint(0, 1) == 1 :

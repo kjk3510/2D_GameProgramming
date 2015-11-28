@@ -24,9 +24,9 @@ class Missile:
 
     def update(self, frame_time):
         if self.isMonster == True:
-            self.y -= 60 * frame_time
+            self.y -= 100 * frame_time
         else:
-            self.y += 60 * frame_time
+            self.y += 150 * frame_time
         self.lifeTIme -= frame_time
 
     def IsLive(self):
@@ -35,6 +35,7 @@ class Missile:
     def draw(self):
         #if self.sunny.state in (self.sunny.RIGHT_RUN, self.sunny.LEFT_RUN, self.sunny.DOWN_RUN, self.sunny.UP_RUN, self.sunny.STAND):
         self.image.draw(self.x, self.y)
+        draw_rectangle(*self.get_bb())
 
     def get_bb(self):
         return self.x - self.xSize, self.y - self.ySize, self.x + self.xSize, self.y + self.ySize

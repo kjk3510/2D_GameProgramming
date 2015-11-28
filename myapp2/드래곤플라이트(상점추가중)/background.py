@@ -16,7 +16,7 @@ class Background:
 
     TIME_PER_ACTION = 0.5
     ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
-    FRAMES_PER_ACTION = 100
+    FRAMES_PER_ACTION = 10
 
     def __init__(self):
         self.image = load_image('01.png')

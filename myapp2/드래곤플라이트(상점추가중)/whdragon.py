@@ -14,6 +14,7 @@ class CoinPos:
         self.xSize = 32/2
         self.ySize = 32/2
         self.lifeTime = 1.5
+
     def update(self, frame_time):
         if self.lifeTime > 0.0 :
             self.x += self.xDir * frame_time
@@ -25,6 +26,7 @@ class CoinPos:
 
     def get_bb(self):
         return self.x - self.xSize, self.y - self.ySize, self.x + self.xSize, self.y + self.ySize
+
 
 class Coin:
     image = None
@@ -177,12 +179,15 @@ class Whdragon:
                 return True
 
         return False
+
     def IsDie(self):
         if self.hp <= 0:
             return True
         return False
+
     def draw(self):
         self.image.clip_draw(self.frame*76, 0, 76, 51, self.x, self.y)
+        draw_rectangle(*self.get_bb())
 
        # for i in self.Missile:
         #    i.draw()
