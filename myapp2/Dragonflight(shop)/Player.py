@@ -10,7 +10,7 @@ class Player:
     Name = None
     TIME_PER_ACTION = 0.5
     ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
-    FRAMES_PER_ACTION = 4
+    FRAMES_PER_ACTION = 6
 
     LEFT_RUN, RIGHT_RUN, STAND, UP_RUN, DOWN_RUN = 0, 1, 2, 3, 4
 
@@ -71,13 +71,13 @@ class Player:
                 self.Missile_1.remove(i)
 
         if self.state == self.RIGHT_RUN:
-            self.x = min(374, self.x + 150 * frame_time)
+            self.x = min(374, self.x + 200 * frame_time)
         elif self.state == self.LEFT_RUN:
-            self.x = max(10, self.x - 150 * frame_time)
+            self.x = max(10, self.x - 200 * frame_time)
         elif self.state == self.UP_RUN:
-            self.y = min(452, self.y + 150 * frame_time)
+            self.y = min(452, self.y + 200 * frame_time)
         elif self.state == self.DOWN_RUN:
-            self.y = max(60, self.y - 150 * frame_time)
+            self.y = max(60, self.y - 200 * frame_time)
         pass
 
     def draw(self):

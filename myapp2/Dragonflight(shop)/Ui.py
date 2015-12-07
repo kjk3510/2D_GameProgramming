@@ -38,6 +38,7 @@ class UI:
     def Update(frame_time):
         if UI.boss_time > 0 :
             UI.boss_time -= frame_time
+
     def InitBoss(null):
         if UI.boss_time < 0 and UI.boss_time != -100:
             UI.boss_time = -100

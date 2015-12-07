@@ -41,13 +41,9 @@ class Coin:
         self.ySize = 32/2
         num = random.randint(1, 4)
 
-        #self.x, self.y = 35 + 70 * num, 510
         self.frame = 0
         self.total_frames = 0
         self.CoinList = []
-        # self.run_frames = 0
-        # self.state_frames = 0
-        # self.state = self.FLYING
         if Coin.image == None:
             Coin.image = load_image('coin.png')
 
@@ -56,9 +52,8 @@ class Coin:
             self.CoinList.remove(i)
 
     def update(self, frame_time):
-        self.total_frames += Whdragon.FRAMES_PER_ACTION * Whdragon.ACTION_PER_TIME * frame_time
+        self.total_frames += Slime.FRAMES_PER_ACTION * Slime.ACTION_PER_TIME * frame_time
         self.frame = int(self.total_frames) % 4
-        #self.frame = (self.frame + 1) % 4
 
         for i in self.CoinList:
             i.update(frame_time)
@@ -82,8 +77,7 @@ class Coin:
             Coin.image.draw(i.x, i .y)
 
 
-
-class Whdragon:
+class Slime:
     image = None
     FLYING = 0
 
@@ -91,85 +85,43 @@ class Whdragon:
     ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
     FRAMES_PER_ACTION = 4
     Missile = None
-    # def handle_left_run(self):
-    #     self.x -= 5
-    #     self.run_frames += 1
-    #     if self.x < 40:
-    #         self.state = self.FLYING
-    #         self.x = 40
-    #     if self.run_frames == 150:
-    #         self.state = self.FLYING
-    #         self.state_frames = 0
-    #
-    # def handle_left_stand(self):
-    #     self.state_frames += 1
-    #     if self.state_frames == 100:
-    #         self.state = self.FLYING
-    #         self.run_frames = 0
-    #
-    #
-    # def handle_right_run(self):
-    #     self.x += 5
-    #     self.run_frames += 1
-    #     if self.x > 344:
-    #         self.state = self.FLYING
-    #     if self.run_frames == 150:
-    #         self.state = self.FLYING
-    #         self.state_frames = 0
-    #
-    #
-    # def handle_right_stand(self):
-    #     self.state_frames += 1
-    #     if self.state_frames == 100:
-    #         self.state = self.FLYING
-    #         self.run_frames = 0
 
     def __init__(self, num):
-        print("등장!!!")
+        print("보스등장!!!")
         self.xSize = 76/2
         self.ySize = 72/2
-        #num = random.randint(1, 4)
-        self.hp = 2
+        self.hp = 80
         self.x, self.y = 30 + 70  * num, 510
         self.frame = 0
         self.total_frames = 0
-        #self.Missile = []
         self.attackDelay = random.randint(3, 5)
-        # self.run_frames = 0
-        # self.state_frames = 0
-        # self.state = self.FLYING
-        if Whdragon.Missile == None:
-            Whdragon.Missile = list()
-        if Whdragon.image == None:
-            Whdragon.image = load_image('whdragon.png')
+        if Slime.Missile == None:
+            Slime.Missile = list()
+        if Slime.image == None:
+            Slime.image = load_image('slime.png')
 
     def __del__(self):
         pass
-        #for i in self.Missile:
-            #del(i)
-        #    self.Missile.remove(i)
 
     def update(self, frame_time):
-        self.total_frames += Whdragon.FRAMES_PER_ACTION * Whdragon.ACTION_PER_TIME * frame_time
+        self.total_frames += Slime.FRAMES_PER_ACTION * Slime.ACTION_PER_TIME * frame_time
         self.frame = int(self.total_frames) % 4
-        #self.frame = (self.frame + 1) % 4
-        if self.y > 200:
+        if self.y > 250:
             self.y -= 40 * frame_time
 
         self.attackDelay -= frame_time
         if self.attackDelay < 0.0 :
             print("Append!!")
-            Whdragon.Missile.append(Missile(self, True))
+            Slime.Missile.append(Missile(self, True))
             self.attackDelay = 4.0
 
 
     def MissileUpdate(frame_time):
-        #for i in self.Missile:
-        for i in Whdragon.Missile:
+        for i in Slime.Missile:
             i.update(frame_time)
 
             if i.IsLive() == True:
-                Whdragon.Missile.remove(i)
+                Slime.Missile.remove(i)
 
     def collision(self, missile, damage = 1):
         for i in missile:
@@ -189,23 +141,19 @@ class Whdragon:
         self.image.clip_draw(self.frame*76, 0, 76, 51, self.x, self.y)
         draw_rectangle(*self.get_bb())
 
-       # for i in self.Missile:
-        #    i.draw()
-
     def MissileDraw(null):
-        for i in Whdragon.Missile:
+        for i in Boss.Missile:
             i.draw()
 
-    #def get_missile(self):
     def get_missile(null):
-        return Whdragon.Missile
+        return Boss.Missile
 
     def ClearMissile(null):
-        for i in Whdragon.Missile:
-            Whdragon.Missile.remove(i)
+        for i in Boss.Missile:
+            Boss.Missile.remove(i)
             del(i)
-        del(Whdragon.Missile)
-        Whdragon.Missile = list()
+        del(Boss.Missile)
+        Boss.Missile = list()
 
     def get_bb(self):
         return self.x - self.xSize, self.y - self.ySize, self.x + self.xSize, self.y + self.ySize
