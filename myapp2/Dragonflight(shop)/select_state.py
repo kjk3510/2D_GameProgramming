@@ -33,16 +33,16 @@ def handle_events():
             game_framework.quit()
 
         elif event.type == SDL_MOUSEMOTION:
-            x, y = event.x, 512 - event.y
+            x, y = event.x, 800 - event.y
 
         elif event.type == SDL_MOUSEBUTTONDOWN:
-            x, y = event.x, 512 - event.y
-            if x > 47 and x < 168 and y > 190 and y < 312:
+            x, y = event.x, 800 - event.y
+            if x > 61 and x < 220 and y > 296 and y < 488:
                 ui = UI("Sunny")
                 print("2", ui.name)
                 #game_framework.push_state(mainGame)
                 game_framework.change_state(mainGame)
-            if x > 215 and x < 335 and y > 190 and y < 312:
+            if x > 280 and x < 437 and y > 296 and y < 488:
                 ui = UI("Raby")
                 #game_framework.push_state(mainGame)
                 game_framework.change_state(mainGame)
@@ -57,7 +57,7 @@ def handle_events():
 
 def draw():
     clear_canvas()
-    image.draw_to_origin(0, 0, 384, 512)
+    image.draw_to_origin(0, 0, 500, 800)
     update_canvas()
 
 

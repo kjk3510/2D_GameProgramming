@@ -23,7 +23,7 @@ class Background:
         self.image2 = load_image('01.png')
         self.total_frames = 0
         self.back_y1 = 0
-        self.back_y2 = 512
+        self.back_y2 = 800
 
     def update(self, frame_time):
         #move_to_map = self.FRAMES_PER_ACTION * frame_time * self.ACTION_PER_TIME
@@ -31,12 +31,12 @@ class Background:
         self.back_y2 -= self.FRAMES_PER_ACTION * frame_time
         #back_y1 -= move_to_map
         #back_y2 -= move_to_map
-        if(self.back_y1 <= -511):
+        if(self.back_y1 <= -800):
             self.back_y1 = 0
-            self.back_y2 = 512
+            self.back_y2 = 800
 
     def draw(self):
-        self.image.draw_to_origin(0, self.back_y2, 384, 512)
+        self.image.draw_to_origin(0, self.back_y2, 500, 800)
 
     def draw2(self):
-        self.image.draw_to_origin(0, self.back_y1, 384, 512)
+        self.image.draw_to_origin(0, self.back_y1, 500, 800)

@@ -21,7 +21,7 @@ class CoinPos:
             self.y += random.randint(15, 20) * frame_time
             self.lifeTime -= frame_time
         else :
-            self.y -=( 80 * frame_time)
+            self.y -=( 200 * frame_time)
             self.lifeTime -= frame_time
 
     def get_bb(self):
@@ -129,8 +129,8 @@ class Whdragon:
         self.xSize = 76/2
         self.ySize = 72/2
         #num = random.randint(1, 4)
-        self.hp = 2
-        self.x, self.y = 30 + 70  * num, 510
+        self.hp = 4
+        self.x, self.y = 30 + 70  * num, 810
         self.frame = 0
         self.total_frames = 0
         #self.Missile = []
@@ -153,14 +153,15 @@ class Whdragon:
         self.total_frames += Whdragon.FRAMES_PER_ACTION * Whdragon.ACTION_PER_TIME * frame_time
         self.frame = int(self.total_frames) % 4
         #self.frame = (self.frame + 1) % 4
-        if self.y > 300:
-            self.y -= 40 * frame_time
+        #if self.y > 300:
+        #    self.y -= 30 * frame_time
+        self.y -= 30 * frame_time
 
         self.attackDelay -= frame_time
         if self.attackDelay < 0.0 :
             print("Append!!")
             Whdragon.Missile.append(Missile(self, True))
-            self.attackDelay = 4.0
+            self.attackDelay = 3.0
 
 
     def MissileUpdate(frame_time):

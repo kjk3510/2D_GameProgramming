@@ -24,9 +24,9 @@ class Missile:
 
     def update(self, frame_time):
         if self.isMonster == True:
-            self.y -= 100 * frame_time
+            self.y -= 150 * frame_time
         else:
-            self.y += 150 * frame_time
+            self.y += 200 * frame_time
         self.lifeTIme -= frame_time
 
     def IsLive(self):
