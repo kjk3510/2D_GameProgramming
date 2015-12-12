@@ -3,7 +3,7 @@ __author__ = 'Administrator'
 
 import game_framework
 import Player
-import mainGame
+import Shop
 from Ui import *
 from pico2d import *
 
@@ -37,15 +37,18 @@ def handle_events():
 
         elif event.type == SDL_MOUSEBUTTONDOWN:
             x, y = event.x, 800 - event.y
-            if x > 61 and x < 220 and y > 296 and y < 488:
+            if x > 73 and x < 263 and y > 296 and y < 488:
                 ui = UI("Sunny")
-                print("2", ui.name)
+                UI.Type = 0
+                print("Suny!!!!!!!!!!!!!!!!")
                 #game_framework.push_state(mainGame)
-                game_framework.change_state(mainGame)
-            if x > 280 and x < 437 and y > 296 and y < 488:
+                game_framework.change_state(Shop)
+            if x > 336 and x < 525 and y > 296 and y < 488:
                 ui = UI("Raby")
+                UI.Type = 1
+                print("Raby!!!!!!!!!!!!!!")
                 #game_framework.push_state(mainGame)
-                game_framework.change_state(mainGame)
+                game_framework.change_state(Shop)
                 #game_framework.change_state(main_raby)
 
         else:
@@ -57,7 +60,7 @@ def handle_events():
 
 def draw():
     clear_canvas()
-    image.draw_to_origin(0, 0, 500, 800)
+    image.draw_to_origin(0, 0, 600, 800)
     update_canvas()
 
 

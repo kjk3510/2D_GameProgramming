@@ -6,6 +6,7 @@ import sys
 import game_framework
 import title_state
 import select_state
+import Shop
 
 from pico2d import *
 from background import *
@@ -14,9 +15,11 @@ from background import *
 from Player import *
 from whdragon import *
 from Ui import *
+from boss import *
 
 first_time = 0
 timesum = 0
+timeboss = 0
 #boss_time = 10.0
 name = "MainState"
 
@@ -28,29 +31,38 @@ player = None
 coin = None
 #Missile_1 = list()
 ui = None
+effect = list()
 
 def enter():
-    global player, character, whdragon, background, team, missile_dr, first_time, coin, PlayerName#, current_time
+    global player, character, whdragon, background, team, missile_dr, first_time, coin, PlayerName, effect#, current_time
     #ui = UI(None)
     #ui = UI()
    # print("1", UI.name)
    # for i in Whdragon.Missile:
         #Whdragon.Missile.remove(i)
         #del(i)
-    player = Player(UI.name)
+    UI.boss_time = 10.0
+    player = Player()
     team = []
 
-    for i in range(6):
-        if random.randint(0, 2) != 0 :
-            team.append(Whdragon(i))
-    background = Background()
+    #if UI.GameLevel == 1 :
+    #    for i in range(6):
+    #        if random.randint(0, 2) != 0 :
+    #            team.append(Whdragon(i, 'slime die.png'))
+    if UI.GameLevel >= 0 :
+        for i in range(6):
+            if random.randint(0, 2) != 0 :
+                team.append(Whdragon((i*1.1), None))
+
+    background = Background(UI.GetMapImage(None))
 
     first_time = get_time()
     coin = Coin()
+    effect = list()
     #Missile_1 = list()
 
 def exit( ):
-    global player, team, background, coin
+    global player, team, background, coin, effect
     for i in team:
         team.remove(i)
     del(team)
@@ -59,6 +71,10 @@ def exit( ):
     del(background)
     del(coin)
     Whdragon.ClearMissile(None)
+
+    for i in effect:
+        effect.remove(i)
+        del(i)
 
 def pause():
     pass
@@ -86,11 +102,23 @@ def monsterRegen(frame_time):
     global timesum
     timesum += frame_time
 
-    if timesum >= 8.0:
+    if timesum >= 10.0:
         timesum = 0.0
         for i in range(6):
             if random.randint(0, 1) == 1 :
-                team.append(Whdragon(i))
+                team.append(Whdragon(i, None))
+
+
+def bossRegen(frame_time):
+    global timeboss
+    timeboss += frame_time
+
+    if timeboss >= 40.0:
+        timesum = 0.0
+        for i in range(6):
+            if random.randint(0, 1) == 1 :
+                team.append(Whdragon(i, None))
+
 
 def update():
     global first_time, coin
@@ -99,9 +127,12 @@ def update():
     first_time = get_time()
 
     UI.Update(frame_time)
+    for i in effect:
+        i.update(frame_time)
+        if i.isEnd() == True:
+            effect.remove(i)
+            del(i)
 
-    if UI.InitBoss(None) == True :
-        print("보스등장1")
 
     monsterRegen(frame_time)
 
@@ -129,6 +160,7 @@ def update():
             if whdragon.IsDie() == True:
                 coin.NewCoin(whdragon)
                 team.remove(whdragon)
+                effect.append(DeathEffect(whdragon))
                 del(whdragon)
 
     #이거는 미사일들 업데이트
@@ -138,12 +170,23 @@ def update():
     mon_missile = Whdragon.get_missile(None)
 
     if player.collision(mon_missile) == True:
-        print("충돌") #플레이어가 몬스터에게 총알 맞을떄 하면됨
+        #  print("충돌") #플레이어가 몬스터에게 총알 맞을떄 하면됨
         game_framework.change_state(select_state)
         #break
 
+
+    if UI.InitBoss(None) == True :
+        print("보스등장!")
+        NextStage()
+
     #for i in Missile_1:
     #    i.update()
+
+
+def NextStage():
+    UI.GameLevel+=1
+    game_framework.change_state(Shop)
+
 
 def draw():
     #global Missile_1
@@ -153,6 +196,9 @@ def draw():
     background.draw2()
 
     player.draw()
+
+    for i in effect:
+        i.draw()
 
     for whdragon in team:
         whdragon.draw()

@@ -1,19 +1,23 @@
 __author__ = 'Administrator'
 
 from pico2d import *
+from Ui import *
 
 #cos(90 * (3.141592/180.0))
 class Missile:
-    def __init__(self, player, isMonster):
+    def __init__(self, player, isMonster, Image):
         self.raby = player
         self.x, self.y = player.x, player.y
 
         self.xSize = 10
         self.ySize = 20
+        if Image != None:
+            self.image = Image
 
-        if isMonster == False:
+        elif isMonster == False:
             if player.Name == "Raby":
-                self.image = load_image('bullet_raby.png')
+                if UI.WeaponLevel == 0:
+                    self.image = load_image('bullet_raby.png')
             elif player.Name == "Sunny":
                 self.image = load_image('bullet_sunny.png')
         else:

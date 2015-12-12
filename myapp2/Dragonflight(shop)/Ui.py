@@ -6,10 +6,20 @@ PlayerName = None
 
 class UI:
     name = None
+    Type = 0
     gold = 0
-    boss_time = 10.0
+    boss_time = 30.0
+    GameLevel = 0
 
+    WeaponLevel = 0
+    ArmorLevel = 0
+    WeaponImage = list()
+    WeaponIngame = list()
+    MapImage = list()
+
+    ArmorGauge = 0
     item = None
+    ArmorImage = None
 
     TIME_PER_ACTION = 0.5
     ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
@@ -18,6 +28,8 @@ class UI:
     LEFT_RUN, RIGHT_RUN, STAND, UP_RUN, DOWN_RUN = 0, 1, 2, 3, 4
 
     def __init__(self, name):
+        UI.boss_time = 10.0
+
         if name != None:
             UI.name = name
         self.x, self.y = 192, 60
@@ -26,10 +38,80 @@ class UI:
         self.state = self.STAND
         self.xSize = 128/2
         self.ySize = 106/2
+        self.font = load_font('ConolaMalgun.ttf', 40)
+
+    def __del__(self):
+        UI.DeleteImage(None)
+
+    def DeleteImage(none):
+        for i in UI.WeaponImage :
+            UI.WeaponImage.remove(i)
+            del(i)
+        del(UI.WeaponImage)
+
+        for i in UI.WeaponIngame :
+            UI.WeaponIngame.remove(i)
+            del(i)
+        del(UI.WeaponIngame)
+
+        for i in UI.MapImage:
+            UI.MapImage.remove(i)
+            del(i)
+        del(UI.MapImage)
+
+        del(UI.ArmorImage)
+
+    def MakeImage(none):
+        UI.DeleteImage(None)
+        UI.WeaponIngame = list()
+        UI.WeaponImage = list()
+        UI.MapImage = list()
+
+        UI.WeaponImage.append(load_image('item1_1.png'))
+        UI.WeaponImage.append(load_image('item2_1.png'))
+        UI.WeaponImage.append(load_image('item1_2.png'))
+        UI.WeaponImage.append(load_image('item2_2.png'))
+
+        UI.WeaponIngame.append(load_image('bullet_sunny.png'))
+        UI.WeaponIngame.append(load_image('bullet_raby.png'))
+        UI.WeaponIngame.append(load_image('bullet_sunny_two.png'))
+        UI.WeaponIngame.append(load_image('bullet_raby_two.png'))
+        UI.WeaponIngame.append(load_image('bullet_sunny_three.png'))
+        UI.WeaponIngame.append(load_image('bullet_raby_three.png'))
+
+        UI.ArmorImage = load_image('shield.png')
+
+        UI.MapImage.append(load_image('01.png'))
+        UI.MapImage.append(load_image('02.png'))
+        #UI.MapImage.append(load_image('03.png'))
+        #UI.MapImage.append(load_image('04.png'))
+        #UI.MapImage.append(load_image('05.png'))
+
+    def draw_font(self):
+        self.font.draw(20, 780, 'GOLD: %d' % UI.gold)
+
+    def AddArmor(none):
+        if UI.gold >= 50:
+            UI.gold -= 50
+            UI.ArmorGauge += 1
+            print("아머게이지 증가", UI.ArmorGauge)
+
+    def ChangeWeapon(Image):
+        if UI.WeaponLevel > 0:
+            Image =  UI.WeaponImage[(UI.Type % 2) + (2 * (UI.WeaponLevel-1))]
+            return Image
+            print(UI.WeaponLevel)
+        return None
+
+    def GetWeaponInGame(none):
+        return UI.WeaponIngame[(UI.Type % 2) + (2 * (UI.WeaponLevel))]
 
     def AddGold(money):
         UI.gold += money
         print(UI.gold)
+
+    def GetMapImage(none):
+        return UI.MapImage[(UI.GameLevel)%5]
 
 #self 쓰지말것*****************************************************************************
     def BuyItem(items):
@@ -47,3 +129,16 @@ class UI:
 
     def handle_event(self, event):
         pass
+
+
+def ItemBuy(type, Image):
+    tempImage = Image
+    cost = (UI.WeaponLevel + 50)
+    if UI.WeaponLevel >= 1:
+        cost = UI.WeaponLevel * 50
+    if type == 'weapon' and UI.gold >= cost and UI.WeaponLevel < 2:
+        UI.WeaponLevel += 1
+        UI.gold -= cost
+        return UI.ChangeWeapon(Image)
+
+    return tempImage

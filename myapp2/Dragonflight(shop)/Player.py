@@ -5,6 +5,7 @@ import random
 from game_framework import *
 from pico2d import *
 from Missile import *
+from Ui import *
 
 class Player:
     Name = None
@@ -14,12 +15,12 @@ class Player:
 
     LEFT_RUN, RIGHT_RUN, STAND, UP_RUN, DOWN_RUN = 0, 1, 2, 3, 4
 
-    def __init__(self, name):
+    def __init__(self):
         self.x, self.y = 192, 60
         self.frame = 0
         self.total_frames = 0
         self.state = self.STAND
-        Player.Name = name
+        Player.Name = UI.name
         if Player.Name == "Sunny":
             print("Sunny")
             self.image = load_image('sunny.png')
@@ -71,7 +72,7 @@ class Player:
                 self.Missile_1.remove(i)
 
         if self.state == self.RIGHT_RUN:
-            self.x = min(490, self.x + 200 * frame_time)
+            self.x = min(590, self.x + 200 * frame_time)
         elif self.state == self.LEFT_RUN:
             self.x = max(10, self.x - 200 * frame_time)
         elif self.state == self.UP_RUN:
@@ -81,15 +82,24 @@ class Player:
         pass
 
     def draw(self):
+
         self.image.clip_draw(self.frame*128, 0, 128, 106, self.x, self.y)
         draw_rectangle(*self.get_bb())
         for i in self.Missile_1:
             i.draw()
+        if UI.ArmorGauge > 0 :
+            UI.ArmorImage.draw(self.x, self.y)
 
     def collision(self, missile):
         for i in missile:
             if collide(self, i) :
-                return True
+                missile.remove(i)
+                del(i)
+                if UI.ArmorGauge > 0 :
+                    print("충격 흡수")
+                    UI.ArmorGauge-=1
+                else:
+                    return True
 
         return False
 
@@ -100,5 +110,5 @@ class Player:
         return self.Missile_1
 
     def shooting(self):
-        newmissile = Missile(self, False)
+        newmissile = Missile(self, False, UI.GetWeaponInGame(None))
         self.Missile_1.append(newmissile)

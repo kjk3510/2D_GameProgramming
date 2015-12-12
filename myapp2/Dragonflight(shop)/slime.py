@@ -106,7 +106,7 @@ class Slime:
     def update(self, frame_time):
         self.total_frames += Slime.FRAMES_PER_ACTION * Slime.ACTION_PER_TIME * frame_time
         self.frame = int(self.total_frames) % 4
-        if self.y > 250:
+        if self.y > 650:
             self.y -= 40 * frame_time
 
         self.attackDelay -= frame_time

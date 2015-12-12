@@ -3,8 +3,34 @@ __author__ = 'Administrator'
 import random
 
 from pico2d import *
+import Ui
+
+class DeathEffect:
 
 
+    def __init__(self, target):
+        self.image = load_image(target.death_Image)
+        self.FRAMES_PER_ACTION = target.death_ifa
+
+        self.x = target.x
+        self.y = target.y
+        self.total_frame = 0
+        self.frame = 0
+        self.image_num = target.death_num
+
+        self.xSize = target.death_xSize
+        self.ySize = target.death_ySize
+        #self.effectTIme =
+    def update(self, frame_time):
+        self.total_frame += self.FRAMES_PER_ACTION * frame_time
+        print(self.total_frame)
+        self.frame = int(self.total_frame)
+
+    def draw(self):
+        self.image.clip_draw(self.xSize * self.frame, 0, self.xSize, self.ySize, self.x, self.y)
+
+    def isEnd(self):
+        return (self.image_num - 1 == self.frame)
 
 class Background:
 
@@ -18,9 +44,9 @@ class Background:
     ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
     FRAMES_PER_ACTION = 100
 
-    def __init__(self):
-        self.image = load_image('01.png')
-        self.image2 = load_image('01.png')
+    def __init__(self, MapImage):
+        self.image = MapImage
+        self.image2 = MapImage
         self.total_frames = 0
         self.back_y1 = 0
         self.back_y2 = 800
@@ -36,7 +62,7 @@ class Background:
             self.back_y2 = 800
 
     def draw(self):
-        self.image.draw_to_origin(0, self.back_y2, 500, 800)
+        self.image.draw_to_origin(0, self.back_y2, 600, 800)
 
     def draw2(self):
-        self.image.draw_to_origin(0, self.back_y1, 500, 800)
+        self.image.draw_to_origin(0, self.back_y1, 600, 800)

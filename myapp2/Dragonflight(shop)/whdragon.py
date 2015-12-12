@@ -124,7 +124,7 @@ class Whdragon:
     #         self.state = self.FLYING
     #         self.run_frames = 0
 
-    def __init__(self, num):
+    def __init__(self, num, IMAGE):
         print("등장!!!")
         self.xSize = 76/2
         self.ySize = 72/2
@@ -135,11 +135,21 @@ class Whdragon:
         self.total_frames = 0
         #self.Missile = []
         self.attackDelay = random.randint(3, 5)
+
+        self.death_Image = 'blood.png'
+        self.death_ifa = 4
+        self.death_num = 8
+        self.death_xSize = 100
+        self.death_ySize = 100
+
         # self.run_frames = 0
         # self.state_frames = 0
         # self.state = self.FLYING
         if Whdragon.Missile == None:
             Whdragon.Missile = list()
+        if IMAGE != None:
+            Whdragon.image = load_image(IMAGE)
+
         if Whdragon.image == None:
             Whdragon.image = load_image('whdragon.png')
 
@@ -155,12 +165,12 @@ class Whdragon:
         #self.frame = (self.frame + 1) % 4
         #if self.y > 300:
         #    self.y -= 30 * frame_time
-        self.y -= 30 * frame_time
+        self.y -= 35 * frame_time
 
         self.attackDelay -= frame_time
         if self.attackDelay < 0.0 :
             print("Append!!")
-            Whdragon.Missile.append(Missile(self, True))
+            Whdragon.Missile.append(Missile(self, True, None))
             self.attackDelay = 3.0
 
 

@@ -88,13 +88,19 @@ class Boss:
 
     def __init__(self, num):
         print("보스등장!!!")
-        self.xSize = 76/2
-        self.ySize = 72/2
-        self.hp = 40
-        self.x, self.y = 30 + 70  * num, 510
+        self.xSize = 256/2
+        self.ySize = 204/2
+        self.hp = 80
+        self.x, self.y = 30 + 70  * num, 810
         self.frame = 0
         self.total_frames = 0
         self.attackDelay = random.randint(3, 5)
+
+        self.death_Image = 'blood.png'
+        self.death_ifa = 2
+        self.death_num = 8
+        self.death_xSize = 100
+        self.death_ySize = 100
         if Boss.Missile == None:
             Boss.Missile = list()
         if Boss.image == None:
@@ -106,7 +112,7 @@ class Boss:
     def update(self, frame_time):
         self.total_frames += Boss.FRAMES_PER_ACTION * Boss.ACTION_PER_TIME * frame_time
         self.frame = int(self.total_frames) % 4
-        if self.y > 250:
+        if self.y > 540:
             self.y -= 40 * frame_time
 
         self.attackDelay -= frame_time
@@ -139,7 +145,7 @@ class Boss:
         return False
 
     def draw(self):
-        self.image.clip_draw(self.frame*76, 0, 76, 51, self.x, self.y)
+        self.image.clip_draw(self.frame*256, 0, 256, 205, self.x, self.y)
         draw_rectangle(*self.get_bb())
 
     def MissileDraw(null):
