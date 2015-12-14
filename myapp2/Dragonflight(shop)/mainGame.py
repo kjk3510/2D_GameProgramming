@@ -7,6 +7,7 @@ import game_framework
 import title_state
 import select_state
 import Shop
+import game_over
 
 from pico2d import *
 from background import *
@@ -34,14 +35,14 @@ ui = None
 effect = list()
 
 def enter():
-    global player, character, whdragon, background, team, missile_dr, first_time, coin, PlayerName, effect#, current_time
+    global player, character, whdragon, background, team, missile_dr, first_time, coin, PlayerName, effect, hit#, current_time
     #ui = UI(None)
     #ui = UI()
    # print("1", UI.name)
    # for i in Whdragon.Missile:
         #Whdragon.Missile.remove(i)
         #del(i)
-    UI.boss_time = 10.0
+    UI.boss_time = 30.0
     player = Player()
     team = []
 
@@ -50,7 +51,7 @@ def enter():
     #        if random.randint(0, 2) != 0 :
     #            team.append(Whdragon(i, 'slime die.png'))
     if UI.GameLevel >= 0 :
-        for i in range(6):
+        for i in range(7):
             if random.randint(0, 2) != 0 :
                 team.append(Whdragon((i*1.1), None))
 
@@ -102,9 +103,9 @@ def monsterRegen(frame_time):
     global timesum
     timesum += frame_time
 
-    if timesum >= 10.0:
+    if timesum >= 8.0:
         timesum = 0.0
-        for i in range(6):
+        for i in range(7):
             if random.randint(0, 1) == 1 :
                 team.append(Whdragon(i, None))
 
@@ -113,11 +114,11 @@ def bossRegen(frame_time):
     global timeboss
     timeboss += frame_time
 
-    if timeboss >= 40.0:
+    if timeboss >= 30.0:
         timesum = 0.0
-        for i in range(6):
+        for i in range(1):
             if random.randint(0, 1) == 1 :
-                team.append(Whdragon(i, None))
+                team.append(whdragon(i, None))
 
 
 def update():
@@ -155,6 +156,7 @@ def update():
         #collision(미사일, 데미지) collision(미사일)하면 1씩 깎임
         if whdragon.collision(missile, 2) == True: # 내 총알이랑 몬스터랑 충돌일때
             #coin.NewCoinMany(whdragon, 5)
+            Player.hit(None)
 
             #hp가 0이면 True
             if whdragon.IsDie() == True:
@@ -171,7 +173,7 @@ def update():
 
     if player.collision(mon_missile) == True:
         #  print("충돌") #플레이어가 몬스터에게 총알 맞을떄 하면됨
-        game_framework.change_state(select_state)
+        game_framework.change_state(game_over)
         #break
 
 
@@ -185,6 +187,7 @@ def update():
 
 def NextStage():
     UI.GameLevel+=1
+    UI.boss_time = 30.0
     game_framework.change_state(Shop)
 
 
@@ -205,6 +208,8 @@ def draw():
     #미사일들 그리기
     Whdragon.MissileDraw(None)
     coin.draw()
+    UI.draw(None)
+
     #for i in Missile_1:
     #    i.draw()
     update_canvas()

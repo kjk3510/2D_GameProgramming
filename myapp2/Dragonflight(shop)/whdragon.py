@@ -171,7 +171,7 @@ class Whdragon:
         if self.attackDelay < 0.0 :
             print("Append!!")
             Whdragon.Missile.append(Missile(self, True, None))
-            self.attackDelay = 3.0
+            self.attackDelay = 4.0
 
 
     def MissileUpdate(frame_time):

@@ -9,6 +9,10 @@ from Ui import *
 
 class Player:
     Name = None
+    shoot_sound = None
+    Die_sound = None
+    hit_sound = None
+
     TIME_PER_ACTION = 0.5
     ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
     FRAMES_PER_ACTION = 6
@@ -30,12 +34,26 @@ class Player:
         self.xSize = 116/2
         self.ySize = 100/2
 
+        if Player.shoot_sound == None:
+            Player.shoot_sound = load_wav('ch_attack.wav')
+            Player.shoot_sound.set_volume(32)
+        if Player.hit_sound == None:
+            Player.hit_sound = load_wav('critical.wav')
+            Player.hit_sound.set_volume(32)
+
         self.Missile_1 = list()
+
+    def shoot(self):
+        self.shoot_sound.play()
+
+    def hit(self):
+        Player.hit_sound.play()
 
     def handle_event(self, event):
         if (event.type, event.key) == (SDL_KEYDOWN, SDLK_SPACE):
             if self.state in (self.RIGHT_RUN, self.LEFT_RUN, self.DOWN_RUN, self.UP_RUN, self.STAND):
                 self.shooting()
+                Player.shoot(self)
 
         if (event.type, event.key) == (SDL_KEYDOWN, SDLK_LEFT):
             if self.state in (self.STAND, self.RIGHT_RUN, self.UP_RUN, self.DOWN_RUN):
@@ -98,6 +116,7 @@ class Player:
                 if UI.ArmorGauge > 0 :
                     print("충격 흡수")
                     UI.ArmorGauge-=1
+                    Player.hit(self)
                 else:
                     return True
 

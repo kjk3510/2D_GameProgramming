@@ -20,6 +20,7 @@ class DeathEffect:
 
         self.xSize = target.death_xSize
         self.ySize = target.death_ySize
+
         #self.effectTIme =
     def update(self, frame_time):
         self.total_frame += self.FRAMES_PER_ACTION * frame_time
@@ -44,12 +45,17 @@ class Background:
     ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
     FRAMES_PER_ACTION = 100
 
+    global GameLevel
+
     def __init__(self, MapImage):
         self.image = MapImage
         self.image2 = MapImage
         self.total_frames = 0
         self.back_y1 = 0
         self.back_y2 = 800
+        self.bgm = load_music('bgm_fir.mp3')
+        self.bgm.set_volume(45)
+        self.bgm.repeat_play()
 
     def update(self, frame_time):
         #move_to_map = self.FRAMES_PER_ACTION * frame_time * self.ACTION_PER_TIME

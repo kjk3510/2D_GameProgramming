@@ -90,7 +90,7 @@ class Slime:
         print("보스등장!!!")
         self.xSize = 76/2
         self.ySize = 72/2
-        self.hp = 80
+        self.hp = 1200
         self.x, self.y = 30 + 70  * num, 510
         self.frame = 0
         self.total_frames = 0
@@ -134,6 +134,7 @@ class Slime:
 
     def IsDie(self):
         if self.hp <= 0:
+            self.image.draw = load_image('slime die.png')
             return True
         return False
 
@@ -142,18 +143,18 @@ class Slime:
         draw_rectangle(*self.get_bb())
 
     def MissileDraw(null):
-        for i in Boss.Missile:
+        for i in Slime.Missile:
             i.draw()
 
     def get_missile(null):
-        return Boss.Missile
+        return Slime.Missile
 
     def ClearMissile(null):
-        for i in Boss.Missile:
-            Boss.Missile.remove(i)
+        for i in Slime.Missile:
+            Slime.Missile.remove(i)
             del(i)
-        del(Boss.Missile)
-        Boss.Missile = list()
+        del(Slime.Missile)
+        Slime.Missile = list()
 
     def get_bb(self):
         return self.x - self.xSize, self.y - self.ySize, self.x + self.xSize, self.y + self.ySize

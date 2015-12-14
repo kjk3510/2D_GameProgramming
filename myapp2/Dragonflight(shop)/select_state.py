@@ -11,13 +11,17 @@ ui = None
 name = "SelectState"
 image = None
 character = None
+ui_button = None
 #def getUI():
 #    global ui
  #   return ui
 
 def enter():
-    global image, ui
+    global image, ui, ui_button
     image = load_image('selected.png')
+
+    ui_button = load_wav('ui_button.wav')
+    ui_button.set_volume(40)
 
 
 def exit():
@@ -27,7 +31,7 @@ def exit():
 
 def handle_events():
     events = get_events()
-    global x, y, PlayerName, ui
+    global x, y, PlayerName, ui, ui_button
     for event in events:
         if event.type == SDL_QUIT:
             game_framework.quit()
@@ -40,13 +44,17 @@ def handle_events():
             if x > 73 and x < 263 and y > 296 and y < 488:
                 ui = UI("Sunny")
                 UI.Type = 0
+                UI.Init(None)
                 print("Suny!!!!!!!!!!!!!!!!")
+                ui_button.play(1)
                 #game_framework.push_state(mainGame)
                 game_framework.change_state(Shop)
             if x > 336 and x < 525 and y > 296 and y < 488:
                 ui = UI("Raby")
                 UI.Type = 1
+                UI.Init(None)
                 print("Raby!!!!!!!!!!!!!!")
+                ui_button.play(1)
                 #game_framework.push_state(mainGame)
                 game_framework.change_state(Shop)
                 #game_framework.change_state(main_raby)

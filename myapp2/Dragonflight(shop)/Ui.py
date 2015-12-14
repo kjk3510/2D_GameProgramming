@@ -26,9 +26,12 @@ class UI:
     FRAMES_PER_ACTION = 4
 
     LEFT_RUN, RIGHT_RUN, STAND, UP_RUN, DOWN_RUN = 0, 1, 2, 3, 4
+    font = None
+
+    get_coin = None
 
     def __init__(self, name):
-        UI.boss_time = 10.0
+        UI.boss_time = 30.0
 
         if name != None:
             UI.name = name
@@ -38,10 +41,19 @@ class UI:
         self.state = self.STAND
         self.xSize = 128/2
         self.ySize = 106/2
-        self.font = load_font('ConolaMalgun.ttf', 40)
+        self.get_coin = load_wav('get_coin.wav')
+        self.get_coin.set_volume(32)
+
+    def Init(none):
+        UI.WeaponLevel = 0
+        UI.ArmorLevel = 0
+        UI.gold = 50
+        UI.boss_time = 20.0
+        UI.GameLevel = 0
 
     def __del__(self):
-        UI.DeleteImage(None)
+        pass
+        #UI.DeleteImage(None)
 
     def DeleteImage(none):
         for i in UI.WeaponImage :
@@ -66,6 +78,8 @@ class UI:
         UI.WeaponIngame = list()
         UI.WeaponImage = list()
         UI.MapImage = list()
+        if UI.font == None:
+            UI.font = load_font('ConsolaMalgun.ttf')
 
         UI.WeaponImage.append(load_image('item1_1.png'))
         UI.WeaponImage.append(load_image('item2_1.png'))
@@ -83,12 +97,15 @@ class UI:
 
         UI.MapImage.append(load_image('01.png'))
         UI.MapImage.append(load_image('02.png'))
-        #UI.MapImage.append(load_image('03.png'))
-        #UI.MapImage.append(load_image('04.png'))
-        #UI.MapImage.append(load_image('05.png'))
+        UI.MapImage.append(load_image('03.png'))
+        UI.MapImage.append(load_image('04.png'))
+        UI.MapImage.append(load_image('05.png'))
 
-    def draw_font(self):
-        self.font.draw(20, 780, 'GOLD: %d' % UI.gold)
+    def draw_font(frame_time):
+        UI.font.draw(20, 780, "GOLD: %d, ArmorGauge: %d, Time: %f" % (UI.gold, UI.ArmorGauge, get_time()), (255,255,255))
+
+    def draw(frame_time):
+        UI.draw_font(frame_time)
 
     def AddArmor(none):
         if UI.gold >= 50:
@@ -100,13 +117,13 @@ class UI:
         if UI.WeaponLevel > 0:
             Image =  UI.WeaponImage[(UI.Type % 2) + (2 * (UI.WeaponLevel-1))]
             return Image
-            print(UI.WeaponLevel)
         return None
 
     def GetWeaponInGame(none):
         return UI.WeaponIngame[(UI.Type % 2) + (2 * (UI.WeaponLevel))]
 
     def AddGold(money):
+        global get_coin
         UI.gold += money
         print(UI.gold)
 

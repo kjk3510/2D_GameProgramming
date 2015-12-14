@@ -39,7 +39,7 @@ class Coin:
     def __init__(self):
         self.xSize = 32/2
         self.ySize = 32/2
-        num = random.randint(1, 4)
+        num = random.randint(5, 10)
 
         self.frame = 0
         self.total_frames = 0
@@ -119,7 +119,7 @@ class Boss:
         if self.attackDelay < 0.0 :
             print("Append!!")
             Boss.Missile.append(Missile(self, True))
-            self.attackDelay = 4.0
+            self.attackDelay = 3.0
 
 
     def MissileUpdate(frame_time):
