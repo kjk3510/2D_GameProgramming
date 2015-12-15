@@ -151,7 +151,7 @@ def update():
     coin.update(frame_time)
     if coin.collision(player) == True:
         #ui=UI() 이렇게 클래스 만들지말고 반드시 UI.Addgold
-        UI.AddGold(random.randint(3, 5))
+        UI.AddGold(random.randint(5, 10))
 
     player.update(frame_time)
 
