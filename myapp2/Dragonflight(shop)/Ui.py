@@ -18,6 +18,7 @@ class UI:
     MapImage = list()
 
     ArmorGauge = 0
+    Bomb = 0
     item = None
     ArmorImage = None
 
@@ -102,7 +103,7 @@ class UI:
         UI.MapImage.append(load_image('05.png'))
 
     def draw_font(frame_time):
-        UI.font.draw(20, 780, "GOLD: %d, ArmorGauge: %d, Time: %f" % (UI.gold, UI.ArmorGauge, get_time()), (255,255,255))
+        UI.font.draw(20, 780, "GOLD: %d, ArmorGauge: %d, Bomb: %d, Time: %f" % (UI.gold, UI.ArmorGauge, UI.Bomb, get_time()), (255,255,255))
 
     def draw(frame_time):
         UI.draw_font(frame_time)
@@ -112,6 +113,12 @@ class UI:
             UI.gold -= 50
             UI.ArmorGauge += 1
             print("아머게이지 증가", UI.ArmorGauge)
+
+    def AddBomb(none):
+        if UI.gold >= 100:
+            UI.gold -= 100
+            UI.Bomb += 1
+            print("폭탄 증가", UI.Bomb)
 
     def ChangeWeapon(Image):
         if UI.WeaponLevel > 0:
@@ -152,7 +159,7 @@ def ItemBuy(type, Image):
     tempImage = Image
     cost = (UI.WeaponLevel + 50)
     if UI.WeaponLevel >= 1:
-        cost = UI.WeaponLevel * 50
+        cost = UI.WeaponLevel * 100
     if type == 'weapon' and UI.gold >= cost and UI.WeaponLevel < 2:
         UI.WeaponLevel += 1
         UI.gold -= cost

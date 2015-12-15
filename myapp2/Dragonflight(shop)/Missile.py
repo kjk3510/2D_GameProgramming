@@ -39,7 +39,7 @@ class Missile:
     def draw(self):
         #if self.sunny.state in (self.sunny.RIGHT_RUN, self.sunny.LEFT_RUN, self.sunny.DOWN_RUN, self.sunny.UP_RUN, self.sunny.STAND):
         self.image.draw(self.x, self.y)
-        draw_rectangle(*self.get_bb())
+        #draw_rectangle(*self.get_bb())
 
     def get_bb(self):
         return self.x - self.xSize, self.y - self.ySize, self.x + self.xSize, self.y + self.ySize
@@ -51,10 +51,9 @@ class Bomb:
     FRAMES_PER_ACTION = 6
 
     def __init__(self, player):
-        self.raby = player
         self.x, self.y = player.x, player.y
-        self.xSize = 300
-        self.ySize = 300
+        self.xSize = 255
+        self.ySize = 255
 
         self.frame = 0
         self.total_frames = 0
@@ -68,7 +67,7 @@ class Bomb:
 
     def draw(self):
         self.image.clip_draw(self.frame * 550, 0, 550, 550, self.x, self.y)
-        draw_rectangle(*self.get_bb())
+        #draw_rectangle(*self.get_bb())
 
     def get_bb(self):
         return self.x - self.xSize, self.y - self.ySize, self.x + self.xSize, self.y + self.ySize

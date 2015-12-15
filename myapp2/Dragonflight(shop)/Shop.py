@@ -57,6 +57,9 @@ def handle_events():
             if x > 225 and x < 375 and y > 590 and y < 765 :
                 UI.AddArmor(None)
                 shop_button.play(1)
+            if x > 400 and x < 556 and y > 350 and y < 530 :
+                UI.AddBomb(None)
+                shop_button.play(1)
 
         else:
             if (event.type, event.key) == (SDL_KEYDOWN, SDLK_SPACE):

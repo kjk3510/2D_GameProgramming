@@ -91,7 +91,8 @@ class Boss:
         self.xSize = 256/2
         self.ySize = 204/2
         self.hp = 80
-        self.x, self.y = 30 + 70  * num, 810
+        #self.x, self.y = 30 + 70  * num, 810
+        self.x, self.y = 300, 810
         self.frame = 0
         self.total_frames = 0
         self.attackDelay = random.randint(3, 5)

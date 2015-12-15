@@ -173,7 +173,6 @@ class Whdragon:
             Whdragon.Missile.append(Missile(self, True, None))
             self.attackDelay = 4.0
 
-
     def MissileUpdate(frame_time):
         #for i in self.Missile:
         for i in Whdragon.Missile:
@@ -191,14 +190,6 @@ class Whdragon:
 
         return False
 
-    def collision_bb(self, bomb, damage = 40):
-        for i in bomb:
-            if collide(self, i) :
-                self.hp-=damage
-                return True
-
-        return False
-
     def IsDie(self):
         if self.hp <= 0:
             return True
@@ -206,7 +197,7 @@ class Whdragon:
 
     def draw(self):
         self.image.clip_draw(self.frame*76, 0, 76, 51, self.x, self.y)
-        draw_rectangle(*self.get_bb())
+        #draw_rectangle(*self.get_bb())
 
        # for i in self.Missile:
         #    i.draw()

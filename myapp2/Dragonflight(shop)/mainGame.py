@@ -122,10 +122,17 @@ def bossRegen(frame_time):
 
 
 def update():
-    global first_time, coin
+    global first_time, coin, damage
 
     frame_time = get_time() - first_time
     first_time = get_time()
+
+    if UI.WeaponLevel == 0:
+        damage = 2
+    elif UI.WeaponLevel == 1:
+        damage = 4
+    elif UI.WeaponLevel == 2:
+        damage = 6
 
     UI.Update(frame_time)
     for i in effect:
@@ -136,6 +143,7 @@ def update():
 
 
     monsterRegen(frame_time)
+    #bossRegen(frame_time)
 
     #raby.update(frame_time)
 
@@ -143,7 +151,7 @@ def update():
     coin.update(frame_time)
     if coin.collision(player) == True:
         #ui=UI() 이렇게 클래스 만들지말고 반드시 UI.Addgold
-        UI.AddGold(random.randint(1, 3))
+        UI.AddGold(random.randint(3, 5))
 
     player.update(frame_time)
 
@@ -155,7 +163,7 @@ def update():
     for whdragon in team:
         whdragon.update(frame_time)
         #collision(미사일, 데미지) collision(미사일)하면 1씩 깎임
-        if whdragon.collision(missile, 2) == True: # 내 총알이랑 몬스터랑 충돌일때
+        if whdragon.collision(missile, damage) == True: # 내 총알이랑 몬스터랑 충돌일때
             #coin.NewCoinMany(whdragon, 5)
             Player.hit(None)
 
@@ -165,13 +173,18 @@ def update():
                 team.remove(whdragon)
                 effect.append(DeathEffect(whdragon))
                 del(whdragon)
-        elif whdragon.collision_bb(bomb, 40) == True: # 폭탄이랑 몬스터 충돌할때
-            #hp가 0이면 True
-            if whdragon.IsDie() == True:
-                coin.NewCoin(whdragon)
-                team.remove(whdragon)
-                effect.append(DeathEffect(whdragon))
-                del(whdragon)
+
+
+    for boss in team:
+        boss.update(frame_time)
+        if boss.collision(missile, damage) == True:
+            Player.hit(None)
+
+            if boss.IsDie() == True:
+                coin.NewCoin(boss)
+                team.remove(boss)
+                effect.append(DeathEffect(boss))
+                del(boss)
 
     #이거는 미사일들 업데이트
     Whdragon.MissileUpdate(frame_time)
@@ -187,7 +200,7 @@ def update():
 
     if UI.InitBoss(None) == True :
         print("보스등장!")
-        #NextStage()
+        NextStage()
 
     #for i in Missile_1:
     #    i.update()
@@ -195,7 +208,7 @@ def update():
 
 def NextStage():
     UI.GameLevel+=1
-    #UI.boss_time = 30.0
+    UI.boss_time = 30.0
     game_framework.change_state(Shop)
 
 
@@ -217,9 +230,9 @@ def draw():
     Whdragon.MissileDraw(None)
     coin.draw()
     UI.draw(None)
-    if UI.InitBoss(None) == True :
-        for boss in team:
-            boss.draw()
+
+    for boss in team:
+        boss.draw()
 
     #for i in Missile_1:
     #    i.draw()

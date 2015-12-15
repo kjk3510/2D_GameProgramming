@@ -21,7 +21,7 @@ class Player:
     LEFT_RUN, RIGHT_RUN, STAND, UP_RUN, DOWN_RUN = 0, 1, 2, 3, 4
 
     def __init__(self):
-        self.x, self.y = 192, 60
+        self.x, self.y = 300, 60
         self.frame = 0
         self.total_frames = 0
         self.state = self.STAND
@@ -32,8 +32,8 @@ class Player:
         elif Player.Name == "Raby":
             print("Raby")
             self.image = load_image('raby.png')
-        self.xSize = 116/2
-        self.ySize = 100/2
+        self.xSize = 100/2
+        self.ySize = 80/2
 
         if Player.shoot_sound == None:
             Player.shoot_sound = load_wav('ch_attack.wav')
@@ -66,6 +66,7 @@ class Player:
             if self.state in (self.RIGHT_RUN, self.LEFT_RUN, self.DOWN_RUN, self.UP_RUN, self.STAND):
                 self.bomb()
                 Player.bomb_e(self)
+                UI.Bomb -= 1
 
         if (event.type, event.key) == (SDL_KEYDOWN, SDLK_LEFT):
             if self.state in (self.STAND, self.RIGHT_RUN, self.UP_RUN, self.DOWN_RUN):
@@ -115,7 +116,7 @@ class Player:
 
     def draw(self):
         self.image.clip_draw(self.frame*128, 0, 128, 106, self.x, self.y)
-        draw_rectangle(*self.get_bb())
+        #draw_rectangle(*self.get_bb())
         for i in self.Missile_1:
             i.draw()
         if UI.ArmorGauge > 0 :
@@ -151,6 +152,7 @@ class Player:
         self.Missile_1.append(newmissile)
 
     def bomb(self):
-        newbomb = Bomb(self)
-        self.Bomb.append(newbomb)
-        print("폭탄발사!")
+        if UI.Bomb > 0:
+            newbomb = Bomb(self)
+            self.Bomb.append(newbomb)
+            print("폭탄발사!")
