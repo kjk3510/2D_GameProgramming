@@ -118,7 +118,7 @@ def bossRegen(frame_time):
         timesum = 0.0
         for i in range(1):
             if random.randint(0, 1) == 1 :
-                team.append(whdragon(i, None))
+                team.append(Boss(i, None))
 
 
 def update():
@@ -150,6 +150,7 @@ def update():
     background.update(frame_time)
 
     missile = player.get_missile()
+    bomb = player.get_missile()
 
     for whdragon in team:
         whdragon.update(frame_time)
@@ -158,6 +159,13 @@ def update():
             #coin.NewCoinMany(whdragon, 5)
             Player.hit(None)
 
+            #hp가 0이면 True
+            if whdragon.IsDie() == True:
+                coin.NewCoin(whdragon)
+                team.remove(whdragon)
+                effect.append(DeathEffect(whdragon))
+                del(whdragon)
+        elif whdragon.collision_bb(bomb, 40) == True: # 폭탄이랑 몬스터 충돌할때
             #hp가 0이면 True
             if whdragon.IsDie() == True:
                 coin.NewCoin(whdragon)
@@ -179,7 +187,7 @@ def update():
 
     if UI.InitBoss(None) == True :
         print("보스등장!")
-        NextStage()
+        #NextStage()
 
     #for i in Missile_1:
     #    i.update()
@@ -187,7 +195,7 @@ def update():
 
 def NextStage():
     UI.GameLevel+=1
-    UI.boss_time = 30.0
+    #UI.boss_time = 30.0
     game_framework.change_state(Shop)
 
 
@@ -209,6 +217,9 @@ def draw():
     Whdragon.MissileDraw(None)
     coin.draw()
     UI.draw(None)
+    if UI.InitBoss(None) == True :
+        for boss in team:
+            boss.draw()
 
     #for i in Missile_1:
     #    i.draw()

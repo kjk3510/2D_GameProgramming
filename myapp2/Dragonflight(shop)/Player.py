@@ -12,6 +12,7 @@ class Player:
     shoot_sound = None
     Die_sound = None
     hit_sound = None
+    bomb_e_sound = None
 
     TIME_PER_ACTION = 0.5
     ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
@@ -39,9 +40,13 @@ class Player:
             Player.shoot_sound.set_volume(32)
         if Player.hit_sound == None:
             Player.hit_sound = load_wav('critical.wav')
-            Player.hit_sound.set_volume(32)
+            Player.hit_sound.set_volume(40)
+        if Player.bomb_e_sound == None:
+            Player.bomb_e_sound = load_wav('explosion.wav')
+            Player.bomb_e_sound.set_volume(40)
 
         self.Missile_1 = list()
+        self.Bomb = list()
 
     def shoot(self):
         self.shoot_sound.play()
@@ -49,11 +54,18 @@ class Player:
     def hit(self):
         Player.hit_sound.play()
 
+    def bomb_e(self):
+        self.bomb_e_sound.play()
+
     def handle_event(self, event):
         if (event.type, event.key) == (SDL_KEYDOWN, SDLK_SPACE):
             if self.state in (self.RIGHT_RUN, self.LEFT_RUN, self.DOWN_RUN, self.UP_RUN, self.STAND):
                 self.shooting()
                 Player.shoot(self)
+        elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_x):
+            if self.state in (self.RIGHT_RUN, self.LEFT_RUN, self.DOWN_RUN, self.UP_RUN, self.STAND):
+                self.bomb()
+                Player.bomb_e(self)
 
         if (event.type, event.key) == (SDL_KEYDOWN, SDLK_LEFT):
             if self.state in (self.STAND, self.RIGHT_RUN, self.UP_RUN, self.DOWN_RUN):
@@ -88,6 +100,8 @@ class Player:
             i.update(frame_time)
             if i.IsLive() :
                 self.Missile_1.remove(i)
+        for i in self.Bomb:
+            i.update(frame_time)
 
         if self.state == self.RIGHT_RUN:
             self.x = min(590, self.x + 200 * frame_time)
@@ -100,13 +114,14 @@ class Player:
         pass
 
     def draw(self):
-
         self.image.clip_draw(self.frame*128, 0, 128, 106, self.x, self.y)
         draw_rectangle(*self.get_bb())
         for i in self.Missile_1:
             i.draw()
         if UI.ArmorGauge > 0 :
             UI.ArmorImage.draw(self.x, self.y)
+        for i in self.Bomb:
+            i.draw()
 
     def collision(self, missile):
         for i in missile:
@@ -128,6 +143,14 @@ class Player:
     def get_missile(self):
         return self.Missile_1
 
+    def get_bomb(self):
+        return self.Bomb
+
     def shooting(self):
         newmissile = Missile(self, False, UI.GetWeaponInGame(None))
         self.Missile_1.append(newmissile)
+
+    def bomb(self):
+        newbomb = Bomb(self)
+        self.Bomb.append(newbomb)
+        print("폭탄발사!")

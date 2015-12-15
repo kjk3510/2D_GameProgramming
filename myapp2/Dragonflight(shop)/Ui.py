@@ -47,8 +47,8 @@ class UI:
     def Init(none):
         UI.WeaponLevel = 0
         UI.ArmorLevel = 0
-        UI.gold = 50
-        UI.boss_time = 20.0
+        UI.gold = 100
+        UI.boss_time = 30.0
         UI.GameLevel = 0
 
     def __del__(self):

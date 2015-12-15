@@ -191,6 +191,14 @@ class Whdragon:
 
         return False
 
+    def collision_bb(self, bomb, damage = 40):
+        for i in bomb:
+            if collide(self, i) :
+                self.hp-=damage
+                return True
+
+        return False
+
     def IsDie(self):
         if self.hp <= 0:
             return True

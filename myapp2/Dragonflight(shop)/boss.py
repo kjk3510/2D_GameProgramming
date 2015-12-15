@@ -21,7 +21,7 @@ class CoinPos:
             self.y += random.randint(15, 20) * frame_time
             self.lifeTime -= frame_time
         else :
-            self.y -=( 80 * frame_time)
+            self.y -=( 200 * frame_time)
             self.lifeTime -= frame_time
 
     def get_bb(self):
@@ -119,8 +119,7 @@ class Boss:
         if self.attackDelay < 0.0 :
             print("Append!!")
             Boss.Missile.append(Missile(self, True))
-            self.attackDelay = 3.0
-
+            self.attackDelay = 4.0
 
     def MissileUpdate(frame_time):
         for i in Boss.Missile:
